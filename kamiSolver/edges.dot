@@ -1,0 +1,14 @@
+digraph  G {
+n_0 -> n_color;
+n_0 -> n_index;
+n_0 -> n_edges;
+n_1 -> n_color;
+n_1 -> n_index;
+n_1 -> n_edges;
+n_2 -> n_color;
+n_2 -> n_index;
+n_2 -> n_edges;
+n_3 -> n_color;
+n_3 -> n_index;
+n_3 -> n_edges;
+}
