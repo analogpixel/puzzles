@@ -58,5 +58,4 @@
   (println (list @maxScore @maxList))
   )
 
-; (20 (:q :j :i :d :c :h :g :o :n :r :s :t :m :e :f :b :a)) # max distance
-; (17 (:q :j :i :d :c :h :g :o :n :r :s :p :l :m :e :f :b :a)) # max moves
+
