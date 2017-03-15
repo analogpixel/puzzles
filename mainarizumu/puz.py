@@ -1,7 +1,7 @@
 from constraint import *
 
 class solvePuz():
-	allLetters = ['a','b','c','d','e','g','h','i','j','k','l','m']
+	allLetters = ['a','b','c','d','e','f','g','h','i','j','k','l','m']
 
 	def __init__(self, puzSize, constraints):
 		problem = Problem()

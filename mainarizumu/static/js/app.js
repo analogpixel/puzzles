@@ -1,7 +1,7 @@
 
 var constraintList = {};
-var puzSize = 5;
-var letters = ['a','b','c','d','e'];
+var puzSize = 6;
+var letters = ['a','b','c','d','e','f'];
 //var numbers = [1,2,3,4];
 var numbers = range(1, puzSize);
 
