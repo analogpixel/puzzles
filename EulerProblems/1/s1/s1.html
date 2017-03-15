@@ -1,0 +1,60 @@
+<html>
+	<head>
+		<style>
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		</style>
+
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.5/p5.js"></script>
+
+		<script>
+
+		function setup() {
+
+			createCanvas(windowWidth, windowHeight);
+			noStroke();
+			background(0);
+		}
+
+		var z=0;
+
+		function draw() {
+			fill(0, 20);
+			rect(0,0, width, height);
+			z+=1;
+			translate(width/2, height/2);
+
+			for (var r=1; r < 15; r++) {
+				for (var i=1; i < r* 15; i++) {
+					push();
+					rotate(radians(z*3));
+					rotate(radians( map(i, 0,r*15, 0, 360) ) );
+					translate(r*30 + sin(radians(z))*100 ,0);
+					fill(map(r,0,20, 100,255) ,i,r);
+					if ( i % 3 == 0 && i % 5 == 0) {  ellipse(0,0, 20,20); }
+					else if (i%5 == 0) { rect(0,0, 10,10); }
+					else if (i%3 ==0 ) { rect(0,0, 3,5); }
+					pop();
+
+				}
+			}
+		}
+
+		function mousePressed() {
+			var fs = fullscreen();
+			fullscreen(!fs);
+		}
+
+		function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
+
+		</script>
+	</head>
+
+	<body>
+	</body>
+</html>

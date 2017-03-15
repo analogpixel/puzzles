@@ -1,0 +1,100 @@
+<html>
+	<head>
+		<style>
+		#main {
+			width:900px;
+			height:900px;
+		}
+		</style>
+
+		<script src="d3.min.js"></script>
+		<script src="jq.js"></script>
+		<script>
+		// https://github.com/mbostock/d3/wiki/Drag-Behavior
+
+
+
+		var data = [ {id:0, ranges: [[3,0,10]], x: 100, y:100 },
+			{id: 1, ranges: [[5,0,10]], x:50, y:50},
+			{id: 2, ranges: [[6,0,10]], x:20, y:150} ];
+		var id=4;
+
+
+		function colide(o) {
+			for (var i=0; i < data.length; i++) {
+				for (var j=0; j < data.length; j++) {
+					if ( i != j && Math.abs(data[i].x - data[j].x) < 15 && Math.abs(data[i].y - data[j].y) < 15) {
+						for (var m=0; m < data[j].ranges.length; m++) {
+							data[i].ranges.push( data[j].ranges[m] )
+						}
+						data.splice(j,1);
+						draw();
+					}
+				}
+			}
+		}
+
+		$( function() {
+			draw();
+		});
+
+		function popout(d) {
+			if (d.ranges.length >1) {
+				data.push( {id: id++, ranges: [d.ranges.pop()], x: d.x + 30, y: d.y -30});
+				draw();
+			}
+		}
+
+		function draw() {
+			var drag = d3.behavior.drag()
+				.on("drag", function(d,i) {
+					d.x =  +d.x + d3.event.dx ;
+					d.y = + d.y + d3.event.dy ;
+					d3.select(this).attr("transform", "translate(" + [d.x,d.y] + ")scale(1)");
+					colide(d);
+				});
+
+			var svg = d3.select("svg")
+
+			var group = svg.selectAll("g")
+				.data(data, function (d) { return d.id });
+
+			group.enter().append("g");
+
+			// without the text field, d3 seems to get confused on what to delete/add
+			group.text( function (d) { return d.id; });
+
+			// pop out an element from the circle when double clicked
+			group.on("dblclick", popout);
+
+			// move the group to the x,y in the data
+			group.attr("transform", function(d) { return "translate(" + [d.x, d.y]  + ")"; } );
+
+
+			c = group.append("circle")
+				.attr("fill", "#BADBDA")
+				.attr("stroke", "black")
+				.attr("stroke-width", 3)
+				.attr("r", function (d) { return d.ranges.length * 10; } );
+
+
+			c.transition().ease("bounce").attr("r", function (d) { return d.ranges.length * 20;});
+
+			group.append("text")
+				.text( function(d) { return d.ranges.map(function(z) { return z[0]; }).join(",");  })
+				.attr("alignment-baseline", "middle")
+				.attr("text-anchor", "middle");
+
+			group.call(drag);
+			group.exit().transition().selectAll("circle").duration(250).attr("r",0);
+			group.exit().selectAll("text").remove();
+		  group.exit().transition().delay(250).remove();
+
+		}
+		</script>
+	</head>
+
+	<body>
+		<svg id="main" ></svg>
+	</body>
+</html>

@@ -1,0 +1,56 @@
+/*
+http://pegjs.org/online
+
+M:0:5:10 U M:0:3:100 U M:0:9:100 U M:0:10:100
+M:0:3:2 I M:0:3:3
+
+*/
+
+start
+  = goals*
+
+goals
+  = a:union "\n"* {return {union: a}; }
+  / a:intersection "\n"* { return {intersection: a}; }
+	/ multset
+
+intersection
+  = left:multset " I " right:intersection { return left.diff(right); }
+  / multset
+
+union
+  = left:multset " U " right:union { return left.union(right);  }
+  / multset
+
+multset
+  = "M:" a:int ":" b:int ":" c:int { return multSet(a,b,c); }
+
+int
+  = digits:[0-9]+ { return parseInt(digits.join(""),10); }
+
+
+
+
+
+
+/*
+http://pegjs.org/online
+
+M:0:5:10 U M:0:3:100 U M:0:9:100 U M:0:10:100
+M:0:3:2 I M:0:3:3
+
+*/
+
+start
+  = goals+
+
+goals
+  = left:multset " I " right:goals "\n"* { return left.intersect(right); }
+  / left:multset " U " right:goals "\n"* { return left.union(right);  }
+  / multset
+
+multset
+  = "M:" a:int ":" b:int ":" c:int { return multSet(a,b,c); }
+
+int
+  = digits:[0-9]+ { return parseInt(digits.join(""),10); }
