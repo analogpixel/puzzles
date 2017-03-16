@@ -31,11 +31,10 @@ class solvePuz():
 			elif c[0] == 'lt':
 				problem.addConstraint(lambda a,b: a<b, c[1] )
 			elif c[0] == 'eq':
-				problem.addConstraint(lambda a: a==c[2], [c[1]] )
+				problem.addConstraint(lambda a,b=c[2]: a==b, [c[1]] )
 				#problem._variables[c[1]] = [c[2]]
 			elif c[0] == 'dif':
-				d = c[2]
-				problem.addConstraint(lambda a,b: abs(a-b) == d , c[1] )
+				problem.addConstraint(  lambda a,b,c=c[2]: abs(a-b) == c , c[1]  )
 				
    		self.solutions = problem.getSolutions()
 
@@ -66,4 +65,12 @@ if __name__ == "__main__":
 		['eq', 'b4',2]
 		])
 
+	s = solvePuz(6, [
+		["dif", ["b1","b2"], 1],
+		["dif", ["b2","b3"], 2],
+		["dif", ["b3","b4"], 3],
+		["dif", ["b4","b5"], 4],
+		["dif", ["b5","b6"], 5],
+		["dif", ["c2","d2"], 5]
+		])
 	print(s.solutions)

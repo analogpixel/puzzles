@@ -29,20 +29,42 @@
                     <div class="col-md-2"> </div>
 
                     <div class="col-md-8">
+
                         <center>
-                        <a href="https://en.wikipedia.org/wiki/Mainarizumu">Mainarizumu</a><br><br>
+                        Puzzle Size:
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-lg btn-default" onclick="setSize(2)">2</button>
+                                <button type="button" class="btn btn-lg btn-default" onclick="setSize(3)">3</button>
+                                <button type="button" class="btn btn-lg btn-default" onclick="setSize(4)">4</button>
+                                <button type="button" class="btn btn-lg btn-default" onclick="setSize(5)">5</button>
+                                <button type="button" class="btn btn-lg btn-default" onclick="setSize(6)">6</button>
+                                <button type="button" class="btn btn-lg btn-default" onclick="setSize(7)">7</button>
+                                <button type="button" class="btn btn-lg btn-default" onclick="setSize(8)">8</button>
+                                <button type="button" class="btn btn-lg btn-default" onclick="setSize(9)">9</button>
+                            </div>
+                        </center>
+                        <br>
+<hr>
+                        <br>
+
+                        <center>
+                        <!-- <a href="https://en.wikipedia.org/wiki/Mainarizumu">Mainarizumu</a><br><br> -->
+
+                        
+
                         <div id=puzzle></div>
-                        <br><br>
-                        <button onclick="solvePuzzle()">Solve</button>
+                        <br>
+                        <hr><br>
+                        <button type="button" class="btn btn-lg btn-default" onclick="solvePuzzle()">Solve Puzzle</button>
                         </center>
                     </div>
 
                     <div class="col-md-2"> </div>
                  </div>
 
-                    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		    <script src="static/js/jquery-3.1.1.min.js"></script>
-                    <script src="static/js/bootstrap.min.js"> </script>
+            <script src="static/js/bootstrap.min.js"> </script>
 		    <script src="static/js/app.js"></script>
                   
 </body>

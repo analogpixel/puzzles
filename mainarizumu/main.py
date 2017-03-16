@@ -24,8 +24,10 @@ def solve():
 	data = json.loads(request.form['puzzleData'])
 	puzSize = int(request.form['puzSize'])
 
+	print("trying to solve puzzle")
 	s = solvePuz(puzSize,data)
-
+	print("send back data")
+	
 	#print(data)
 	return json.dumps(s.solutions)
 

@@ -1,9 +1,20 @@
 
 var constraintList = {};
 var puzSize = 6;
+var allLetters = ['a','b','c','d','e','f','g','h','i','j','k','l'];
 var letters = ['a','b','c','d','e','f'];
 //var numbers = [1,2,3,4];
 var numbers = range(1, puzSize);
+
+function setSize(n) {
+	puzSize = n;
+	letters = allLetters.slice(0,n);
+	constraintList = {};
+	console.log( puzSize, letters);
+
+	buildPuzzle();
+
+}
 
 function solvePuzzle() {
 	console.log("solving");
@@ -100,7 +111,9 @@ function updateConstraint(t,ctype) {
 
 }
 
-$( function() { 
+$( function() { buildPuzzle(); } );
+
+function buildPuzzle() { 
 
 	html = "<table border=0>\n";
 	for (var j=0; j < puzSize; j++) {
@@ -135,4 +148,4 @@ $( function() {
 	$("#puzzle").html(html);
 	//console.log(html);
 
-} );
+} 
