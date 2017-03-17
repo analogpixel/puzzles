@@ -73,9 +73,12 @@ function solvePuzzle() {
 	var puzdata = JSON.stringify(puz);
 	//console.log(puzdata);
 
+	$.blockUI({ message: '<h1>Solving puzzle please wait</h1><br><img src=static/img/loading.gif><br><br>' }); 
+
 	$.post("/solve", {'puzzleData': puzdata, 'puzSize': puzSize},  
 		(d) => { 
 			d = JSON.parse(d);
+			$.unblockUI();
 			//console.log(d);
 			//console.log(typeof(d));
 			var posSolutions = {};
