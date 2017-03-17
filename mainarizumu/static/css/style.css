@@ -10,7 +10,7 @@ td {
 .num {
 	font-size: 0.8em;
 	border: 1px solid black;
-	
+	padding-top: 15px;
 	width: 60px;
 	height: 60px;
 	border-radius: 3px;

@@ -5,15 +5,44 @@ var allLetters = ['a','b','c','d','e','f','g','h','i','j','k','l'];
 var letters = ['a','b','c','d','e','f'];
 //var numbers = [1,2,3,4];
 var numbers = range(1, puzSize);
+var allSolutions = false;
+var currentSolution = 0;
 
 function setSize(n) {
 	puzSize = n;
 	letters = allLetters.slice(0,n);
 	constraintList = {};
-	console.log( puzSize, letters);
-
+	numbers = range(1, puzSize);
+	console.log( puzSize, numbers, letters);
+	$("#solution").html("");
 	buildPuzzle();
 
+}
+
+function nextSolution() {
+	currentSolution++;
+	if (currentSolution >= allSolutions.length) { currentSolution = 0; }
+	fillInSolution();
+}
+
+function prevSolution() {
+	currentSolution = currentSolution - 1;
+	if (currentSolution < 0) { currentSolution = allSolutions.length -1; }
+	fillInSolution();
+}
+
+function fillInSolution() {
+	posSolutions = allSolutions[currentSolution];
+
+
+	console.log( currentSolution, posSolutions);
+	$("#solution").html("<button class='btn btn-md btn-default' onclick='prevSolution()'>prev</button> Solution " + (currentSolution+1) + " of " + (allSolutions.length) + " <button class='btn btn-md btn-default' onclick='nextSolution()'>next</button><br><br>" );
+
+	// now fill in the values
+	Object.keys( posSolutions).forEach( (d) => {
+		//console.log(d, posSolutions[d].join(","))
+		$("#" + d).html( posSolutions[d] );
+	} );
 }
 
 function solvePuzzle() {
@@ -51,6 +80,12 @@ function solvePuzzle() {
 			//console.log(typeof(d));
 			var posSolutions = {};
 
+			console.log(d);
+			
+			allSolutions = d;
+			currentSolution = 0;
+			fillInSolution();
+			/*
 			d.forEach( (el) => {
 				//console.log( typeof(el) );
 				Object.keys(el).forEach( (okeys) => {
@@ -63,16 +98,12 @@ function solvePuzzle() {
 						posSolutions[okeys] = [ el[okeys] ] ;
 					}
 				});
-				
-				
 			} );
+			*/
+
 			//console.log(posSolutions);
 
-			// now fill in the values
-			Object.keys( posSolutions).forEach( (d) => {
-				//console.log(d, posSolutions[d].join(","))
-				$("#" + d).html( posSolutions[d].join(",") );
-			} );
+			
 
 
 		} );
