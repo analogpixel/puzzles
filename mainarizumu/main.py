@@ -11,7 +11,14 @@ from flask import Flask
 from flask import request
 from flask import render_template
 
+from multiprocessing import Pool, TimeoutError
+from time import sleep
+
+
 app = Flask(__name__)
+
+class TimedOutExc(Exception):
+  pass
 
 # https://labix.org/python-constraint
 
@@ -22,10 +29,20 @@ def default():
 @app.route("/solve", methods=['POST'] )
 def solve():
 	data = json.loads(request.form['puzzleData'])
+
 	puzSize = int(request.form['puzSize'])
 
 	print("trying to solve puzzle")
-	s = solvePuz(puzSize,data)
+	#s = solvePuz(puzSize,data)
+	pool = Pool(processes=1)
+	result = pool.apply_async(solvePuz, (puzSize,data,))
+	try:
+	    s = result.get(timeout=300)
+	except TimeoutError:
+	    print 'timeout'
+	    return json.dumps([])
+	    raise TimedOutExc()
+
 	print("send back data")
 	
 	#print(data)
