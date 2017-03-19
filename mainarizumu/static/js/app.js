@@ -1,8 +1,8 @@
 
 var constraintList = {};
-var puzSize = 6;
+var puzSize = 2;
 var allLetters = ['a','b','c','d','e','f','g','h','i','j','k','l'];
-var letters = ['a','b','c','d','e','f'];
+var letters = ['a','b'];
 //var numbers = [1,2,3,4];
 var numbers = range(1, puzSize);
 var allSolutions = false;
@@ -67,9 +67,20 @@ function solvePuzzle() {
 			cmd = "dif";
 			puz.push( ['dif', k.split("_"), tmp -2])
 		}
-
 		//console.log(k, cmd, tmp);
 	}
+
+	letters.forEach( (letter) => {
+			numbers.forEach ( (number) => {
+				var tmp = $("#" + letter + number).html();
+				if (tmp != "") {
+					puz.push( ['eq', letter + number, parseInt(tmp)] );
+				}
+			});
+		});
+
+	console.log("puzzle:", puz);
+
 	var puzdata = JSON.stringify(puz);
 	//console.log(puzdata);
 
@@ -120,6 +131,21 @@ function range(start, count) {
       });
     }
 
+function updateNumBlock(t) {
+
+	var tmp = $("#" + t).html();
+
+	if (tmp == "") { 
+		$("#" + t).html("1");
+	} else {
+		var n = parseInt(tmp);
+		n++;
+		if (n > puzSize) { n = "";}
+		$("#" + t).html(n);
+
+	}
+}
+
 function updateConstraint(t,ctype) {
 	// console.log(t,ctype);
 
@@ -159,10 +185,10 @@ function buildPuzzle() {
 		html += "<tr>\n";
 
 		for (var i=1; i < puzSize; i++) {
-			html += '<td><div class=num id="' + l1 + i + '"></div></td>\n';
+			html += '<td><div onclick="updateNumBlock(this.id)" class=num id="' + l1 + i + '"></div></td>\n';
 			html += '<td><div onclick="updateConstraint(this.id, \'h\')" class=hconstraint id="' + l1 + i + "_" + l1 + (i+1) + '"></div></td>\n'
 		}
-		html += '<td><div class=num id="' + l1 + puzSize + '"></div></td>\n';
+		html += '<td><div class=num onclick="updateNumBlock(this.id)" id="' + l1 + puzSize + '"></div></td>\n';
 		html += "</tr>\n";
 
 		if (j < puzSize -1) {
